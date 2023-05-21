@@ -36,6 +36,7 @@ func (command *NewsCommand) newFeeds(count int) (list []*hn.Item) {
 	}
 	return
 }
+
 func (command *NewsCommand) CommandDefinition() (string, *slacker.CommandDefinition) {
 	definition := &slacker.CommandDefinition{
 		Handler: func(botCtx slacker.BotContext, request slacker.Request, response slacker.ResponseWriter) {
@@ -77,4 +78,26 @@ func (command *NewsCommand) CommandDefinition() (string, *slacker.CommandDefinit
 		},
 	}
 	return newsCommandString, definition
+}
+
+func (command *NewsCommand) JobDefinition() (string, *slacker.JobDefinition) {
+	return "0 0 0 * * *", &slacker.JobDefinition{
+		Description: "A cron job that runs every minute",
+		Handler: func(jobCtx slacker.JobContext) {
+
+			listFeeds := command.newFeeds(10)
+
+			attachments := []slack.Attachment{}
+			for _, elemet := range listFeeds {
+				attachments = append(attachments, slack.Attachment{
+					Color:      "#ffaa00",
+					AuthorName: elemet.Title,
+					AuthorLink: elemet.URL,
+					Title:      elemet.By,
+					Text:       elemet.Type,
+				})
+			}
+			jobCtx.APIClient().PostMessage("#test-browng-bot", slack.MsgOptionText("New feeds on this morning !", false), slack.MsgOptionAttachments(attachments...))
+		},
+	}
 }

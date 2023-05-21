@@ -1,7 +1,12 @@
 package main
 
-import "log"
+import (
+	"github.com/9bany/workflows/server"
+	"github.com/9bany/workflows/utils"
+)
 
 func main() {
-	log.Println("Hello, i'm a bot")
+	config := utils.LodConfig(".")
+	serve := server.NewServer(config)
+	serve.Start()
 }

@@ -52,6 +52,9 @@ func (bot *SlackBot) initDefault() {
 func (bot *SlackBot) initCommands() {
 
 	newsComand := cmds.NewNewsCommand()
+
+	// jobs
+	bot.slacker.Job(newsComand.JobDefinition())
 	// commands
 	bot.slacker.Command(cmds.PingCommandDefinition())
 	bot.slacker.Command(newsComand.CommandDefinition())

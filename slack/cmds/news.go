@@ -97,7 +97,7 @@ func (command *NewsCommand) JobDefinition() (string, *slacker.JobDefinition) {
 					Text:       elemet.Type,
 				})
 			}
-			jobCtx.APIClient().PostMessage("#test-browng-bot", slack.MsgOptionText("New feeds on this morning !", false), slack.MsgOptionAttachments(attachments...))
+			jobCtx.APIClient().PostMessage("#general", slack.MsgOptionText("New feeds on this morning !", false), slack.MsgOptionAttachments(attachments...))
 		},
 	}
 }

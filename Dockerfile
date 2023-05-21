@@ -12,6 +12,7 @@ WORKDIR /app
 RUN apk add --no-cache bash
 COPY --from=builder /app/main .
 
+EXPOSE 8080
 COPY start.sh .
 RUN ["chmod", "+x", "/app/start.sh"]
 

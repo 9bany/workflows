@@ -14,5 +14,4 @@ func LodConfig(path string) Config {
 		AppToken: os.Getenv("SLACK_APP_TOKEN"),
 		BotToken: os.Getenv("SLACK_BOT_TOKEN"),
 	}
-
 }
